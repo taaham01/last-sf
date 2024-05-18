@@ -1,0 +1,161 @@
+﻿@model Soniclogistics_updated.Models.Rfq
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Rfq</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="OperationalUnit" class="control-label"></label>
+                <input asp-for="OperationalUnit" class="form-control" />
+                <span asp-validation-for="OperationalUnit" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ShippingAddress" class="control-label"></label>
+                <input asp-for="ShippingAddress" class="form-control" />
+                <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreateDate" class="control-label"></label>
+                <input asp-for="CreateDate" class="form-control" />
+                <span asp-validation-for="CreateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Currency" class="control-label"></label>
+                <input asp-for="Currency" class="form-control" />
+                <span asp-validation-for="Currency" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupID" class="control-label"></label>
+                <input asp-for="SupID" class="form-control" />
+                <span asp-validation-for="SupID" class="text-danger"></span>
+            </div>
+
+            <table id="rfqProducts">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Item Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @if (ViewData["ProductNames"] != null){
+                            <select asp-for="ProductName" class="form-control product-name">
+                                <option value="">Select Product</option>
+                                @foreach (var product in ViewData["ProductNames"] as List<string>)
+                                {
+                                    var parts = product.Split('|');
+                                    var productId = parts[1];
+                                    var productName = parts[0];
+                                    <option value="@productId">@productName</option>
+                                }
+                            </select>
+                            <span asp-validation-for="ProductName" class="text-danger"></span>
+                        }</td>
+
+                        <td>
+                            <input asp-for="Quantity" class="form-control quantity" />
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <textarea asp-for="ItemDiscription" class="form-control  item-description"></textarea>
+                            <span asp-validation-for="ItemDiscription" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger remove-row">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="addRow" class="btn btn-sm btn-primary">Add Row</button>
+
+            <div class="form-group">
+                <input type="hidden" name="ProductDetails" />
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $("#addRow").click(function () {
+                var newRow = `
+                                <tr>
+                                    <td>
+                                        <select asp-for="ProductName" class="form-control product-name">
+                                            <option value="">Select Product</option>
+        @if (ViewData["ProductNames"] != null){
+                                            @foreach (var product in ViewData["ProductNames"] as List<string>)
+        {
+            var parts = product.Split('|');
+            var productId = parts[1];
+            var productName = parts[0];
+                    <option value="@productId">@productName</option>
+        }}
+                                        </select>
+                                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="Quantity" class="form-control quantity" />
+                                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <textarea asp-for="ItemDiscription" class="form-control item-description"></textarea>
+                                        <span asp-validation-for="ItemDiscription" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger remove-row">Remove</button>
+                                    </td>
+                                </tr>
+                                `;
+                $("#rfqProducts tbody").append(newRow);
+                
+            });
+
+            $(document).on("click", ".remove-row", function () {
+                $(this).closest("tr").remove();
+            });
+        });
+
+        $("form").submit(function () {
+            var productDetails = [];
+
+            $("#rfqProducts tbody tr").each(function () {
+                var productName = $(this).find(".product-name").val();
+                var quantity = $(this).find(".quantity").val();
+                var itemDescription = $(this).find(".item-description").val();
+
+                if (productName !== "" && quantity !== "" && itemDescription !== "") {
+                    productDetails.push({
+                        
+                        ProductName: productName,
+                        Quantity: quantity,
+                        ItemDescription: itemDescription
+                    });
+                
+                }
+            });
+
+            $("input[name='ProductDetails']").val(JSON.stringify(productDetails));
+        });
+
+    </script>
+}

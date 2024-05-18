@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Soniclogistics_updated</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Soniclogistics_updated.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header style="background-color:#007bff;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+            <div class="container-fluid">
+           <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i>SL</i></a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="masterDataDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Master Data</a>
+                            <ul class="dropdown-menu" aria-labelledby="masterDataDropdown">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Suppliers" asp-action="Index">Suppliers</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="p2pDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">P2P</a>
+                            <ul class="dropdown-menu" aria-labelledby="p2pDropdown">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Rfqs" asp-action="Index">RFQ</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Poes" asp-action="Index">Purchase Order</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Grns" asp-action="Index">GRN</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Invoices" asp-action="Index">Invoice</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <div class="containerr">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-4 py-3">
+        <div class="container text-center">
+            &copy; 2024 - Soniclogistics_updated - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-muted">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+<style>
+/* General Styles */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #007bff;
+}
+
+.navbar-brand {
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #fff !important;
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar-nav .nav-item .nav-link:hover,
+.navbar-nav .nav-item .nav-link:focus {
+    background-color: #0056b3;
+    color: #fff !important;
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+    background-color: #f8f9fa;
+    border: none;
+   /*  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+.dropdown-item {
+    color: #333 !important;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-item:hover {
+    background-color: #007bff;
+    color: #fff !important;
+}
+
+/* Collapsible Submenu Styles */
+#masterDataCollapse {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
+
+#masterDataCollapse .nav-item .nav-link {
+    color: #333 !important;
+    padding: 5px 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#masterDataCollapse .nav-item .nav-link:hover {
+    background-color: #e0e0e0;
+    color: #333 !important;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.footer a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Utility Classes */
+.ps-3 {
+    padding-left: 1rem !important;
+}
+</style>
+</html>
